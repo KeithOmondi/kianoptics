@@ -97,7 +97,7 @@ const Header = ({ activeHeading, allProducts }) => {
             <img
               src="https://optica.africa/cdn/shop/t/121/assets/Optica_Logo_Primary.svg?v=69688584039873325631697273391"
               alt="Logo"
-              className="h-16 w-24 rounded-md object-cover"
+              className="h-16 w-full rounded-md object-contain"
             />
           </Link>
 

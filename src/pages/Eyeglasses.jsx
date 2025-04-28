@@ -51,7 +51,7 @@ const Eyeglasses = () => {
         className="w-full h-[60vh] bg-cover bg-center flex items-center justify-center"
         style={{
           backgroundImage:
-            "url('https://optica.africa/cdn/shop/files/all_fr_web_banner.jpg?v=1744124193')",
+            "url('https://images.pexels.com/photos/3414327/pexels-photo-3414327.jpeg?auto=compress&cs=tinysrgb&w=600')",
         }}
       >
         {/* Optional text here */}

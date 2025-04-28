@@ -59,10 +59,10 @@ const Sunglasses = () => {
 
       {/* Banner Section */}
       <section
-        className="w-full h-[60vh] bg-contain bg-center flex items-center justify-center text-white text-center bg-no-repeat"
+        className="w-full h-[60vh] bg-cover bg-center flex items-center justify-center text-white text-center bg-no-repeat"
         style={{
           backgroundImage:
-            "url('https://optica.africa/cdn/shop/files/all_sg_web_banner.jpg?v=1744124333')",
+            "url('https://images.pexels.com/photos/343717/pexels-photo-343717.jpeg?auto=compress&cs=tinysrgb&w=600')",
         }}
       ></section>
 

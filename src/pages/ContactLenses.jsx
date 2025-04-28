@@ -57,10 +57,11 @@ const ContactLenses = () => {
         <Header />
         {/* Banner Section */}
         <section
-          className="w-full h-[60vh] bg-contain bg-center flex items-center justify-center"
+          className="w-full h-[60vh] bg-cover bg-center flex items-center justify-center"
           style={{
             backgroundImage:
-              "url('https://optica.africa/cdn/shop/files/Banner_USP_1.png?v=1742561043')",
+              "url('https://images.pexels.com/photos/5843471/pexels-photo-5843471.jpeg?auto=compress&cs=tinysrgb&w=600')",
+              
           }}
         >
           {/* Optional text can be added inside if needed */}

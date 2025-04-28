@@ -1,1 +1,1 @@
-export const server = "https://kian-backend-three.vercel.app/api/v2";
+export const server = "https://kian-bacckend.netlify.app/api/v2";
