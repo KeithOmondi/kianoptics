@@ -268,7 +268,7 @@ const ProductDetailsInfo = ({ data, averageRating, totalReviewsLength }) => {
       {active === 3 && (
         <div className="block md:flex gap-8">
           <div className="flex-1">
-            <Link to={`/shop/preview/${data.shop._id}`}>
+            <div className={`${data.shop._id}`}>
               <div className="flex items-center gap-3">
                 <img
                   src={data.shop.avatar?.url}
@@ -282,7 +282,7 @@ const ProductDetailsInfo = ({ data, averageRating, totalReviewsLength }) => {
                   </h5>
                 </div>
               </div>
-            </Link>
+            </div>
             <p className="pt-3">{data.shop.description}</p>
           </div>
 

@@ -1,1 +1,1 @@
-export const server = "https://kian-bacckend.netlify.app/api/v2";
+export const server = "https://kian-optics.netlify.app/api/v2";
