@@ -14,8 +14,8 @@ const HomePage = () => {
         <Header />
         <Hero />
         <Categories />
-        <Banner />
         <BestDeals /> 
+        <Banner />
         <FeaturedProduct />   
         <Footer />
     </div>

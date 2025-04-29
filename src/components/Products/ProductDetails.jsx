@@ -26,7 +26,7 @@ const ProductDetails = ({ data }) => {
   const [click, setClick] = useState(false);
   const [select, setSelect] = useState(0);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch();``
 
   useEffect(() => {
     dispatch(getAllProductsShop(data?.shop._id));
@@ -247,7 +247,7 @@ const ProductDetailsInfo = ({ data, averageRating, totalReviewsLength }) => {
             data.reviews.map((item, index) => (
               <div key={index} className="flex items-start gap-3">
                 <img
-                  src={item.user.avatar?.url}
+                  src={`${item.user?.avatar?.url}`}
                   alt=""
                   className="w-[50px] h-[50px] rounded-full object-cover"
                 />
@@ -271,7 +271,7 @@ const ProductDetailsInfo = ({ data, averageRating, totalReviewsLength }) => {
             <div className={`${data.shop._id}`}>
               <div className="flex items-center gap-3">
                 <img
-                  src={data.shop.avatar?.url}
+                  src={`${data?.shop?.avatar?.url}`}
                   alt=""
                   className="w-[50px] h-[50px] rounded-full object-cover"
                 />

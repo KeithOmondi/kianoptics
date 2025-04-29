@@ -10,24 +10,19 @@ import { getAllProductsShop } from "../../redux/actions/product";
 
 const DashboardHero = () => {
   const dispatch = useDispatch();
-  
-  // Redux state
-  const { orders, error: ordersError } = useSelector((state) => state.order);
+  const { orders } = useSelector((state) => state.order);
   const { seller } = useSelector((state) => state.seller);
-  const { products, error: productsError } = useSelector((state) => state.products);
+  const { products } = useSelector((state) => state.products);
 
-  // Fetching orders and products when the seller's id is available
   useEffect(() => {
-    if (seller?.id) {
-      dispatch(getAllOrdersOfShop(seller.id));
-      dispatch(getAllProductsShop(seller.id));
+    if (seller?._id) {
+      dispatch(getAllOrdersOfShop(seller._id));
+      dispatch(getAllProductsShop(seller._id));
     }
-  }, [dispatch, seller?.id]);
+  }, [dispatch, seller?._id]);
 
-  // Formatting available balance to two decimal places
   const availableBalance = seller?.availableBalance?.toFixed(2) || "0.00";
 
-  // Columns for the DataGrid (for displaying orders)
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
     {
@@ -37,8 +32,8 @@ const DashboardHero = () => {
       flex: 0.7,
       cellClassName: (params) =>
         params.getValue(params.id, "status") === "Delivered"
-          ? "greenColor"
-          : "redColor",
+          ? "text-green-600"
+          : "text-red-600",
     },
     {
       field: "itemsQty",
@@ -55,15 +50,15 @@ const DashboardHero = () => {
       flex: 0.8,
     },
     {
-      field: "action",
+      field: " ",
       flex: 1,
       minWidth: 150,
-      headerName: "Action",
+      headerName: "",
       type: "number",
       sortable: false,
       renderCell: (params) => (
         <Link to={`/dashboard/order/${params.id}`}>
-          <Button variant="contained" color="primary">
+          <Button>
             <AiOutlineArrowRight size={20} />
           </Button>
         </Link>
@@ -71,84 +66,86 @@ const DashboardHero = () => {
     },
   ];
 
-  // Mapping orders to the rows for DataGrid
-  const rows = orders
-    ? orders.map((order) => ({
-        id: order.id,
-        itemsQty: order.cart.reduce((acc, item) => acc + item.qty, 0),
-        total: "Ksh " + order.totalPrice,
-        status: order.status,
-      }))
-    : [];
-
-  if (ordersError || productsError) {
-    return (
-      <div className="w-full p-8 bg-gray-50">
-        <h3 className="text-[24px] font-semibold pb-4 text-gray-700">Error</h3>
-        <p className="text-red-600">{ordersError || productsError}</p>
-      </div>
-    );
-  }
+  const rows =
+    orders?.map((order) => ({
+      id: order._id,
+      itemsQty: order.cart.reduce((acc, item) => acc + item.qty, 0),
+      total: "Ksh " + order.totalPrice,
+      status: order.status,
+    })) || [];
 
   return (
-    <div className="w-full p-8 bg-gray-50">
-      <h3 className="text-[24px] font-semibold pb-4 text-gray-700">Overview</h3>
+    <div className="w-full p-8">
+      <h3 className="text-2xl font-semibold mb-4 text-gray-800">Overview</h3>
 
-      <div className="w-full flex flex-wrap justify-between gap-6 overflow-hidden">
-        {/* Account Balance Card */}
-        <div className="w-full sm:w-[30%] min-h-[20vh] bg-gradient-to-r from-blue-500 via-teal-400 to-green-500 shadow-lg rounded-xl p-6 text-white transition-transform hover:scale-105">
-          <div className="flex items-center mb-4">
-            <AiOutlineMoneyCollect size={40} className="mr-3" />
-            <h3 className="text-[18px] font-medium">Account Balance</h3>
+      <div className="w-full flex flex-col gap-4 lg:flex-row justify-between">
+        {/* Account Balance */}
+        <div className="w-full lg:w-[30%] bg-white shadow rounded p-5">
+          <div className="flex items-center">
+            <AiOutlineMoneyCollect size={30} className="mr-2 text-gray-600" />
+            <h3 className="text-lg font-medium text-gray-700">
+              Account Balance{" "}
+              <span className="text-sm text-gray-500">
+                (with 10% service charge)
+              </span>
+            </h3>
           </div>
-          <p className="text-[22px] font-bold">{`Ksh. ${availableBalance}`}</p>
+          <h5 className="pt-2 pl-9 text-2xl font-semibold text-gray-800">
+            Ksh. {availableBalance}
+          </h5>
           <Link to="/dashboard-withdraw-money">
-            <p className="pt-4 text-[#f5f5f5] font-medium hover:underline">
+            <h5 className="pt-4 pl-2 text-teal-600 hover:underline">
               Withdraw Money
-            </p>
+            </h5>
           </Link>
         </div>
 
-        {/* Orders Card */}
-        <div className="w-full sm:w-[30%] min-h-[20vh] bg-gradient-to-r from-purple-500 via-pink-400 to-red-500 shadow-lg rounded-xl p-6 text-white transition-transform hover:scale-105">
-          <div className="flex items-center mb-4">
-            <MdBorderClear size={40} className="mr-3" />
-            <h3 className="text-[18px] font-medium">All Orders</h3>
+        {/* Orders */}
+        <div className="w-full lg:w-[30%] bg-white shadow rounded p-5">
+          <div className="flex items-center">
+            <MdBorderClear size={30} className="mr-2 text-gray-600" />
+            <h3 className="text-lg font-medium text-gray-700">All Orders</h3>
           </div>
-          <p className="text-[22px] font-bold">{orders ? orders.length : 0}</p>
+          <h5 className="pt-2 pl-9 text-2xl font-semibold text-gray-800">
+            {orders?.length || 0}
+          </h5>
           <Link to="/dashboard-orders">
-            <p className="pt-4 text-[#f5f5f5] font-medium hover:underline">
+            <h5 className="pt-4 pl-2 text-teal-600 hover:underline">
               View Orders
-            </p>
+            </h5>
           </Link>
         </div>
 
-        {/* Products Card */}
-        <div className="w-full sm:w-[30%] min-h-[20vh] bg-gradient-to-r from-green-400 via-teal-300 to-cyan-500 shadow-lg rounded-xl p-6 text-white transition-transform hover:scale-105">
-          <div className="flex items-center mb-4">
-            <AiOutlineMoneyCollect size={40} className="mr-3" />
-            <h3 className="text-[18px] font-medium">All Products</h3>
+        {/* Products */}
+        <div className="w-full lg:w-[30%] bg-white shadow rounded p-5">
+          <div className="flex items-center">
+            <AiOutlineMoneyCollect size={30} className="mr-2 text-gray-600" />
+            <h3 className="text-lg font-medium text-gray-700">All Products</h3>
           </div>
-          <p className="text-[22px] font-bold">{products ? products.length : 0}</p>
+          <h5 className="pt-2 pl-9 text-2xl font-semibold text-gray-800">
+            {products?.length || 0}
+          </h5>
           <Link to="/dashboard-products">
-            <p className="pt-4 text-[#f5f5f5] font-medium hover:underline">
+            <h5 className="pt-4 pl-2 text-teal-600 hover:underline">
               View Products
-            </p>
+            </h5>
           </Link>
         </div>
       </div>
 
       <br />
-      <h3 className="text-[24px] font-semibold pb-4 text-gray-700">Latest Orders</h3>
 
-      <div className="w-full min-h-[45vh] bg-white rounded-xl shadow-lg p-6">
+      <h3 className="text-2xl font-semibold mb-4 text-gray-800">
+        Latest Orders
+      </h3>
+
+      <div className="w-full min-h-[45vh] bg-white rounded shadow p-4">
         <DataGrid
           rows={rows}
           columns={columns}
           pageSize={10}
           disableSelectionOnClick
           autoHeight
-          className="rounded-xl"
         />
       </div>
     </div>

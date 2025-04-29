@@ -184,7 +184,7 @@ const CreateProduct = () => {
                 src={img}
                 key={idx}
                 alt="Uploaded"
-                className="h-[100px] w-[100px] object-cover rounded-md border"
+                className="h-[100px] w-[100px] object-contain rounded-md border"
               />
             ))}
           </div>

@@ -10,13 +10,13 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const UserOrderDetails = () => {
-  const { userOrders } = useSelector((state) => state.order);
+  const { userOrders, isLoading } = useSelector((state) => state.order);
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [comment, setComment] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
-  const [rating, setRating] = useState(1);
+  const [rating, setRating] = useState(0); // Initialize rating to 0
 
   const { id } = useParams();
 
@@ -26,30 +26,47 @@ const UserOrderDetails = () => {
     }
   }, [dispatch, user?._id]);
 
-  const data = userOrders && userOrders.find((item) => item._id === id);
+  const data = userOrders?.find((item) => item._id === id);
 
-  const reviewHandler = async () => {
+  const reviewHandler = async (e) => {
+    if (rating === 0) {
+      toast.warning("Please give a rating before submitting a review.");
+      return;
+    }
+  
+    console.log("user ID:", user?._id);
+    console.log("rating:", rating);
+    console.log("comment:", comment);
+    console.log("product ID:", selectedItem?._id);
+    console.log("order ID:", id);
+  
+    const reviewPayload = {
+      userId: user?._id, // ✅ changed key name
+      rating,
+      comment,
+      productId: selectedItem?._id,
+      orderId: id,
+    };
+  
+    console.log("Submitting review:", reviewPayload);
+  
     try {
-      const { data: resData } = await axios.put(
+      const res = await axios.put(
         `${server}/product/create-new-review`,
-        {
-          user,
-          rating,
-          comment,
-          productId: selectedItem?._id,
-          orderId: id,
-        },
+        reviewPayload,
         { withCredentials: true }
       );
-      toast.success(resData.message);
+      toast.success(res.data.message);
       dispatch(getAllOrdersOfUser(user._id));
       setComment("");
-      setRating(1);
+      setRating(0);
       setOpen(false);
     } catch (error) {
+      console.error("Review submission error:", error.response?.data || error);
       toast.error(error.response?.data?.message || "Something went wrong");
     }
   };
+  
 
   const refundHandler = async () => {
     try {
@@ -65,9 +82,16 @@ const UserOrderDetails = () => {
     }
   };
 
+  if (isLoading || !data) {
+    return (
+      <div className="w-full h-[80vh] flex justify-center items-center">
+        <h1 className="text-[20px]">Loading your order...</h1>
+      </div>
+    );
+  }
+
   return (
     <div className="py-4 px-4 min-h-screen">
-      {/* Top header */}
       <div className="w-full flex items-center justify-between mb-6">
         <div className="flex items-center">
           <BsFillBagFill size={30} color="crimson" />
@@ -75,15 +99,19 @@ const UserOrderDetails = () => {
         </div>
       </div>
 
-      {/* Order basic info */}
       <div className="w-full flex items-center justify-between pt-2 text-gray-600">
-        <h5>Order ID: <span className="text-black">#{data?._id?.slice(0, 8)}</span></h5>
-        <h5>Placed on: <span className="text-black">{data?.createdAt?.slice(0, 10)}</span></h5>
+        <h5>
+          Order ID:{" "}
+          <span className="text-black">#{data?._id?.slice(0, 8)}</span>
+        </h5>
+        <h5>
+          Placed on:{" "}
+          <span className="text-black">{data?.createdAt?.slice(0, 10)}</span>
+        </h5>
       </div>
 
-      {/* Order Items */}
       <div className="mt-6 space-y-5">
-        {data && data.cart.map((item, index) => (
+        {data.cart.map((item, index) => (
           <div key={index} className="w-full flex items-start gap-4">
             <img
               src={item.images[0]?.url}
@@ -92,13 +120,17 @@ const UserOrderDetails = () => {
             />
             <div className="flex-1">
               <h5 className="text-lg font-semibold">{item.name}</h5>
-              <h5 className="text-gray-600">Ksh. {item.discountPrice} x {item.qty}</h5>
+              <h5 className="text-gray-600">
+                Ksh. {item.discountPrice} x {item.qty}
+              </h5>
             </div>
             {!item.isReviewed && data.status === "Delivered" && (
               <button
                 onClick={() => {
                   setOpen(true);
                   setSelectedItem(item);
+                  setRating(0); // Reset rating when opening the review modal
+                  setComment(""); // Reset comment as well
                 }}
                 className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
               >
@@ -109,86 +141,79 @@ const UserOrderDetails = () => {
         ))}
       </div>
 
-      {/* Review Modal */}
-      {open && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center">
-          <div className="w-full max-w-lg bg-white rounded-md shadow-md p-6 relative">
-            <button
-              className="absolute top-4 right-4"
+      {open && selectedItem && (
+        <div className="fixed top-0 left-0 w-full h-full bg-[#00000052] z-50 flex items-center justify-center">
+          <div className="relative bg-white rounded-md p-6 w-[90%] md:w-[50%]">
+            <RxCross1
+              className="absolute top-3 right-3 cursor-pointer"
+              size={20}
               onClick={() => setOpen(false)}
-            >
-              <RxCross1 size={25} className="text-gray-600 hover:text-black" />
-            </button>
-            <h2 className="text-2xl font-semibold text-center mb-6">Give a Review</h2>
-
-            <div className="flex items-center gap-4">
-              <img
-                src={selectedItem?.images[0]?.url}
-                alt=""
-                className="w-20 h-20 object-contain"
-              />
-              <div>
-                <h5 className="text-lg font-medium">{selectedItem?.name}</h5>
-                <h5 className="text-gray-600">Ksh. {selectedItem?.discountPrice} x {selectedItem?.qty}</h5>
-              </div>
+            />
+            <h5 className="pl-3 text-[20px] font-[500]">
+              Give a Rating <span className="text-red-500">*</span>
+            </h5>
+            <div className="flex w-full ml-2 pt-1">
+              {[1, 2, 3, 4, 5].map((i) =>
+                rating >= i ? (
+                  <AiFillStar
+                    key={i}
+                    className="mr-1 cursor-pointer"
+                    color="rgb(246,186,0)"
+                    size={25}
+                    onClick={() => setRating(i)}
+                  />
+                ) : (
+                  <AiOutlineStar
+                    key={i}
+                    className="mr-1 cursor-pointer"
+                    color="rgb(246,186,0)"
+                    size={25}
+                    onClick={() => setRating(i)}
+                  />
+                )
+              )}
             </div>
-
-            <div className="mt-6">
-              <h5 className="font-medium mb-2">Give a Rating <span className="text-red-500">*</span></h5>
-              <div className="flex items-center">
-                {[1, 2, 3, 4, 5].map((i) =>
-                  rating >= i ? (
-                    <AiFillStar
-                      key={i}
-                      className="cursor-pointer text-yellow-400"
-                      size={30}
-                      onClick={() => setRating(i)}
-                    />
-                  ) : (
-                    <AiOutlineStar
-                      key={i}
-                      className="cursor-pointer text-yellow-400"
-                      size={30}
-                      onClick={() => setRating(i)}
-                    />
-                  )
-                )}
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <label className="block font-medium mb-2">Write a Comment (optional)</label>
+            <br />
+            <div className="w-full ml-3">
+              <label className="block text-[20px] font-[500]">
+                Write a comment
+                <span className="ml-1 font-[400] text-[16px] text-[#00000052]">
+                  (optional)
+                </span>
+              </label>
               <textarea
+                name="comment"
+                id=""
+                cols="20"
+                rows="5"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                className="w-full border p-3 rounded resize-none outline-none"
-                rows="4"
-                placeholder="Share your experience..."
+                placeholder="How was your product? write your expresion about it!"
+                className="mt-2 w-[95%] border p-2 outline-none"
               ></textarea>
             </div>
-
-            <button
-              className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded"
-              onClick={rating > 1 ? reviewHandler : null}
+            <div
+              className="text-white bg-blue-500 hover:bg-blue-600 text-center rounded py-2 mt-4 cursor-pointer"
+              onClick={reviewHandler}
             >
-              Submit
-            </button>
+              Submit Review
+            </div>
           </div>
         </div>
       )}
 
-      {/* Total Price */}
       <div className="border-t mt-10 pt-4 text-right">
         <h5 className="text-lg">
           Total Price: <strong>Ksh. {data?.totalPrice}</strong>
         </h5>
       </div>
 
-      {/* Shipping Address & Payment Info */}
       <div className="mt-10 flex flex-col md:flex-row gap-10">
         <div className="flex-1">
           <h4 className="text-xl font-semibold mb-2">Shipping Address:</h4>
-          <p>{data?.shippingAddress?.address1} {data?.shippingAddress?.address2}</p>
+          <p>
+            {data?.shippingAddress?.address1} {data?.shippingAddress?.address2}
+          </p>
           <p>{data?.shippingAddress?.country}</p>
           <p>{data?.shippingAddress?.city}</p>
           <p>{data?.user?.phoneNumber}</p>
@@ -209,7 +234,6 @@ const UserOrderDetails = () => {
         </div>
       </div>
 
-      {/* Message Button */}
       <div className="mt-10">
         <Link to="/">
           <button className="bg-green-500 hover:bg-green-600 text-white py-2 px-8 rounded">

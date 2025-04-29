@@ -4,12 +4,15 @@ import { useSelector } from 'react-redux';
 import Header from '../components/Layout/Header';
 import ProfileSidebar from '../components/Profile/ProfileSidebar';
 import ProfileContent from '../components/Profile/ProfileContent';
+import Footer from '../components/Layout/Footer';
 
 const ProfilePage = () => {
   const { loading } = useSelector((state) => state.user);
   const [active, setActive] = useState(1);
 
   return (
+    <>
+    
     <div className="bg-gray-100 min-h-screen">
       {/* Loading Spinner */}
       {loading ? (
@@ -36,6 +39,9 @@ const ProfilePage = () => {
         </>
       )}
     </div>
+
+    <Footer />
+    </>
   );
 };
 

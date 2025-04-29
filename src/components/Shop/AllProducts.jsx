@@ -15,13 +15,11 @@ const AllProducts = () => {
 
   // Check if seller is available and fetch products
   useEffect(() => {
-    if (seller?._id) {
-      console.log("Fetching products for seller:", seller?._id);
+    if (seller && seller._id) {
       dispatch(getAllProductsShop(seller._id));
-    } else {
-      console.log("Seller ID is not available");
     }
-  }, [dispatch, seller]);
+  }, [dispatch, seller?._id]); // ✅ note dependency on seller._id, not just seller
+  
 
   // Delete product handler
   const handleDelete = (id) => {

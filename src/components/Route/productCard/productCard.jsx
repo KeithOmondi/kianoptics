@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import ProductDetailsCard from "../productDetailsCard/productDetailsCard";
 import Ratings from "../../Products/Ratings";
 
+
 const ProductCard = ({ data, isEvent }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
   const { cart } = useSelector((state) => state.cart);
@@ -74,13 +75,15 @@ const ProductCard = ({ data, isEvent }) => {
             {data.shop.name}
           </h5>
         </div>
-        <div className="flex">
-          <Ratings rating={data?.ratings} />
-        </div>
+        
         <Link to={`/product/${data._id}`}>
           <h4 className="text-gray-800 font-semibold mb-2 line-clamp-2">
             {data.name.length > 40 ? data.name.slice(0, 40) + "..." : data.name}
           </h4>
+
+          <div className="flex">
+          <Ratings rating={data?.ratings} />
+          </div>
 
           <div className="flex items-center space-x-2 mb-2">
             <h5 className="text-primary-600 font-bold text-lg">
