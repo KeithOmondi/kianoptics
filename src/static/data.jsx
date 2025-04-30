@@ -55,24 +55,10 @@ export const navData = [
     },
     {
       id: 5,
-      title: "Sunglasses",
+      title: "Kid's Glasses",
       subTitle: "Protect your eyes with our trendy UV-blocking sunglasses.",
       image_Url:
         "https://optica.africa/cdn/shop/files/OpticaOP_28025_C2_Front_768x.progressive.jpg?v=1744194001",
-    },
-    {
-      id: 6,
-      title: "Blue Light Glasses",
-      subTitle: "Shield your eyes from screens with anti-blue light lenses.",
-      image_Url:
-        "https://optica.africa/cdn/shop/files/c6074c2___FRONT.jpg?v=1742369321",
-    },
-    {
-      id: 7,
-      title: "Sports Eyewear",
-      subTitle: "Performance and protection for active lifestyles.",
-      image_Url:
-        "https://optica.africa/cdn/shop/files/c6074c2___FRONT.jpg?v=1742369321",
     },
     {
       id: 8,
@@ -91,6 +77,22 @@ export const navData = [
     {
       id: 10,
       title: "Designer Frames",
+      subTitle: "Luxury eyewear from top international brands.",
+      image_Url:
+        "https://optica.africa/cdn/shop/files/c6074c2___FRONT.jpg?v=1742369321",
+    },
+    
+    {
+      id: 10,
+      title: "Women's Eyeglasses",
+      subTitle: "Luxury eyewear from top international brands.",
+      image_Url:
+        "https://optica.africa/cdn/shop/files/c6074c2___FRONT.jpg?v=1742369321",
+    },
+    
+    {
+      id: 10,
+      title: "Men's Eyeglasses",
       subTitle: "Luxury eyewear from top international brands.",
       image_Url:
         "https://optica.africa/cdn/shop/files/c6074c2___FRONT.jpg?v=1742369321",
