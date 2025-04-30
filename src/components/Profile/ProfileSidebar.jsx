@@ -58,7 +58,7 @@ const ProfileSidebar = ({ setActive, active }) => {
               setIsOpen(false);
             }}
             className={`flex items-center w-full gap-3 px-3 py-2 rounded-md transition-colors 
-              ${active === id ? "bg-red-100 text-red-600" : "text-gray-700 hover:bg-gray-100"}`}
+              ${active === id ? "bg-blue-900 text-yellow-600" : "text-blue-900 hover:bg-yellow-600"}`}
           >
             <Icon size={22} className={`${active === id ? "text-red-500" : "text-gray-500"}`} />
             <span className="text-sm font-medium">{label}</span>
@@ -70,7 +70,7 @@ const ProfileSidebar = ({ setActive, active }) => {
           <Link to="/admin/dashboard" onClick={() => setActive(8)}>
             <div
               className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors 
-                ${active === 8 ? "bg-red-100 text-red-600" : "text-gray-700 hover:bg-gray-100"}`}
+                ${active === 8 ? "bg-blue-900 text-yellow-600" : "text-blue-900 hover:bg-yellow-600"}`}
             >
               <MdOutlineAdminPanelSettings
                 size={22}
