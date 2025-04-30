@@ -131,16 +131,16 @@ const ProductDetails = ({ data }) => {
                 <div className="flex items-center mt-12 justify-between pr-3">
                   <div className="flex items-center">
                     <button
-                      className="bg-teal-500 text-white font-bold rounded-l px-4 py-2 hover:opacity-75 transition"
+                      className="bg-gray-200 text-gray-600 focus:outline-none hover:bg-gray-300 transition-colors duration-200 px-4 py-2"
                       onClick={decrementCount}
                     >
                       -
                     </button>
-                    <span className="bg-gray-200 text-gray-800 font-medium px-4 py-[11px]">
+                    <span className="bg-white text-gray-800 px-6 py-2 border-t border-b border-gray-300">
                       {count}
                     </span>
                     <button
-                      className="bg-teal-500 text-white font-bold rounded-r px-4 py-2 hover:opacity-75 transition"
+                      className="bg-gray-200 text-gray-600 focus:outline-none hover:bg-gray-300 transition-colors duration-200 px-4 py-2"
                       onClick={incrementCount}
                     >
                       +
