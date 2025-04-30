@@ -99,7 +99,7 @@ const ProductDetails = ({ data }) => {
                     <div
                       key={index}
                       className={`cursor-pointer ${
-                        select === index ? "border-2  w-[80%]" : ""
+                        select === index ? "border-2  w-[80%] object-contain" : ""
                       }`}
                       onClick={() => setSelect(index)}
                     >
