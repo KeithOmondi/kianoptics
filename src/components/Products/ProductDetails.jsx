@@ -187,6 +187,9 @@ const ProductDetails = ({ data }) => {
                         {data.shop.name}
                       </h3>
                     </div>
+                    <div className="flex">
+          <Ratings rating={data?.ratings} />
+          </div>
                     <h5 className="text-sm text-gray-600">
                       ({averageRating}/5) Ratings
                     </h5>
