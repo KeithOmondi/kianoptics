@@ -1,5 +1,5 @@
-import React from "react";
-import { AiOutlineLogin, AiOutlineMessage } from "react-icons/ai";
+import React, { useState } from "react";
+import { AiOutlineLogin, AiOutlineMenu } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { HiOutlineReceiptRefund, HiOutlineShoppingBag } from "react-icons/hi";
 import { MdOutlineAdminPanelSettings, MdOutlineTrackChanges } from "react-icons/md";
@@ -14,79 +14,81 @@ import { server } from "../../server";
 const ProfileSidebar = ({ setActive, active }) => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
+  const [isOpen, setIsOpen] = useState(false);
 
   const logoutHandler = async () => {
     try {
-      const { data } = await axios.get(`${server}/user/logout`, { withCredentials: true });
+      const { data } = await axios.get(`${server}/user/logout`, {
+        withCredentials: true,
+      });
       toast.success(data.message);
       navigate("/login");
-      window.location.reload(); 
+      window.location.reload();
     } catch (error) {
       toast.error(error?.response?.data?.message || "Logout failed");
     }
   };
 
   const sidebarItems = [
-    { id: 1, label: "Profile", icon: <RxPerson size={24} />, action: () => setActive(1) },
-    { id: 2, label: "Orders", icon: <HiOutlineShoppingBag size={24} />, action: () => setActive(2) },
-    { id: 3, label: "Refunds", icon: <HiOutlineReceiptRefund size={24} />, action: () => setActive(3) },
-    { id: 4, label: "Inbox", icon: <AiOutlineMessage size={24} />, action: () => { setActive(4); navigate("/inbox"); }},
-    { id: 5, label: "Track Order", icon: <MdOutlineTrackChanges size={24} />, action: () => setActive(5) },
-    { id: 6, label: "Change Password", icon: <RiLockPasswordLine size={24} />, action: () => setActive(6) },
-    { id: 7, label: "Address", icon: <TbAddressBook size={24} />, action: () => setActive(7) },
+    { id: 1, label: "Profile", icon: RxPerson },
+    { id: 2, label: "Orders", icon: HiOutlineShoppingBag },
+    { id: 3, label: "Refunds", icon: HiOutlineReceiptRefund },
+    { id: 5, label: "Track Order", icon: MdOutlineTrackChanges },
+    { id: 6, label: "Change Password", icon: RiLockPasswordLine },
+    { id: 7, label: "Address", icon: TbAddressBook },
   ];
 
   return (
-    <div className="w-full bg-white shadow-sm rounded-[10px] p-4 pt-8 flex flex-col gap-6">
-      {/* Sidebar Navigation */}
-      {sidebarItems.map((item) => (
-        <div
-          key={item.id}
-          onClick={item.action}
-          className={`flex items-center gap-4 cursor-pointer group ${
-            active === item.id ? "text-red-500" : "text-gray-700"
-          }`}
-        >
-          {React.cloneElement(item.icon, {
-            color: active === item.id ? "red" : "gray",
-            className: "group-hover:text-red-500",
-          })}
-          <span className="hidden md:inline text-sm font-medium">
-            {item.label}
-          </span>
-        </div>
-      ))}
+    <div className="w-full bg-white rounded-2xl shadow-md p-4">
+      {/* Mobile Toggle */}
+      <div className="flex items-center justify-between md:hidden mb-4">
+        <h2 className="text-lg font-semibold">Menu</h2>
+        <button onClick={() => setIsOpen(!isOpen)} className="text-gray-600">
+          <AiOutlineMenu size={24} />
+        </button>
+      </div>
 
-      {/* Admin Dashboard */}
-      {user?.role === "Admin" && (
-        <Link to="/admin/dashboard" className="w-full">
-          <div
-            onClick={() => setActive(8)}
-            className={`flex items-center gap-4 cursor-pointer group ${
-              active === 8 ? "text-red-500" : "text-gray-700"
-            }`}
+      <div className={`flex flex-col space-y-4 ${isOpen ? "block" : "hidden"} md:block`}>
+        {/* Sidebar Items */}
+        {sidebarItems.map(({ id, label, icon: Icon }) => (
+          <button
+            key={id}
+            onClick={() => {
+              setActive(id);
+              setIsOpen(false);
+            }}
+            className={`flex items-center w-full gap-3 px-3 py-2 rounded-md transition-colors 
+              ${active === id ? "bg-red-100 text-red-600" : "text-gray-700 hover:bg-gray-100"}`}
           >
-            <MdOutlineAdminPanelSettings
-              size={24}
-              color={active === 8 ? "red" : "gray"}
-              className="group-hover:text-red-500"
-            />
-            <span className="hidden md:inline text-sm font-medium">
-              Admin Dashboard
-            </span>
-          </div>
-        </Link>
-      )}
+            <Icon size={22} className={`${active === id ? "text-red-500" : "text-gray-500"}`} />
+            <span className="text-sm font-medium">{label}</span>
+          </button>
+        ))}
 
-      {/* Logout */}
-      <div
-        onClick={logoutHandler}
-        className="flex items-center gap-4 cursor-pointer group text-gray-700"
-      >
-        <AiOutlineLogin size={24} className="group-hover:text-red-500" />
-        <span className="hidden md:inline text-sm font-medium">
-          Log out
-        </span>
+        {/* Admin Panel */}
+        {user?.role === "Admin" && (
+          <Link to="/admin/dashboard" onClick={() => setActive(8)}>
+            <div
+              className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors 
+                ${active === 8 ? "bg-red-100 text-red-600" : "text-gray-700 hover:bg-gray-100"}`}
+            >
+              <MdOutlineAdminPanelSettings
+                size={22}
+                className={`${active === 8 ? "text-red-500" : "text-gray-500"}`}
+              />
+              <span className="text-sm font-medium">Admin Dashboard</span>
+            </div>
+          </Link>
+        )}
+
+        {/* Logout */}
+        <button
+          onClick={logoutHandler}
+          className="flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+        >
+          <AiOutlineLogin size={22} className="text-gray-500" />
+          <span className="text-sm font-medium">Log out</span>
+        </button>
       </div>
     </div>
   );

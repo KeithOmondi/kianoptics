@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAllOrdersOfUser } from "../../redux/actions/order";
-import { FaCheckCircle } from "react-icons/fa";
-import { FaShippingFast, FaBoxOpen, FaHome } from "react-icons/fa";
+import { FaCheckCircle, FaShippingFast, FaBoxOpen, FaHome } from "react-icons/fa";
 
 const statusMessages = {
   "Processing": "Your order is being prepared.",
@@ -62,39 +61,45 @@ const TrackOrder = () => {
   }
 
   return (
-    <div className="py-10 px-4 max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold text-center mb-8 text-blue-600">
+    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+      <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 text-blue-600">
         Track Your Order
       </h1>
-      <p className="text-center text-gray-600 mb-10">
+      <p className="text-center text-gray-600 mb-8 text-sm sm:text-base">
         {message || "Order status unavailable."}
       </p>
 
-      <div className="relative flex items-center justify-between text-center">
+      <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-0 text-center">
         {statusSteps.map((step, index) => (
           <div key={index} className="flex-1 relative">
             <div
-              className={`w-8 h-8 mx-auto rounded-full flex items-center justify-center 
-              ${
-                index <= currentStep
+              className={`w-10 h-10 sm:w-8 sm:h-8 mx-auto rounded-full flex items-center justify-center text-sm
+                ${index <= currentStep
                   ? "bg-green-500 text-white"
                   : "bg-gray-300 text-gray-600"
-              }`}
+                }`}
             >
-              {index < currentStep ? <FaCheckCircle /> : index === currentStep ? <FaShippingFast /> : <FaBoxOpen />}
+              {index < currentStep ? (
+                <FaCheckCircle size={16} />
+              ) : index === currentStep ? (
+                <FaShippingFast size={16} />
+              ) : (
+                <FaBoxOpen size={16} />
+              )}
             </div>
             <div
-              className={`mt-2 text-sm ${
+              className={`mt-2 text-xs sm:text-sm ${
                 index <= currentStep ? "text-green-600 font-medium" : "text-gray-500"
               }`}
             >
               {step}
             </div>
 
+            {/* Progress line (hidden on last item) */}
             {index < statusSteps.length - 1 && (
               <div
-                className={`absolute top-4 left-1/2 h-1 w-full transform -translate-x-1/2 
-                ${index < currentStep ? "bg-green-500" : "bg-gray-300"}`}
+                className={`hidden sm:block absolute top-4 left-1/2 h-1 w-full transform -translate-x-1/2 
+                  ${index < currentStep ? "bg-green-500" : "bg-gray-300"}`}
               ></div>
             )}
           </div>
@@ -102,18 +107,18 @@ const TrackOrder = () => {
       </div>
 
       <div className="mt-10 text-center">
-        <p className="text-lg text-gray-700">
+        <p className="text-base sm:text-lg text-gray-700">
           Tracking Order ID:{" "}
           <span className="font-semibold text-black">{order._id.slice(0, 8)}</span>
         </p>
-        <p className="text-sm text-gray-500 mt-2">
+        <p className="text-xs sm:text-sm text-gray-500 mt-2">
           Placed on: {new Date(order.createdAt).toLocaleDateString()}
         </p>
       </div>
 
       {order.status === "Delivered" && (
         <div className="mt-8 flex justify-center">
-          <div className="flex items-center gap-2 bg-green-100 text-green-700 px-6 py-3 rounded-full shadow-sm">
+          <div className="flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full shadow-sm text-sm sm:text-base">
             <FaHome />
             <span className="font-medium">Delivered Successfully</span>
           </div>
