@@ -93,14 +93,14 @@ const ProductDetails = ({ data }) => {
                 <img
                   src={data.images[select]?.url}
                   alt=""
-                  className="w-[80%]"
+                  className="object-contain"
                 />
                 <div className="flex flex-wrap">
                   {data.images.map((image, index) => (
                     <div
                       key={index}
                       className={`cursor-pointer ${
-                        select === index ? "border-2 border-blue-900" : ""
+                        select === index ? "w-[50%] object-contain" : ""
                       }`}
                       onClick={() => setSelect(index)}
                     >
