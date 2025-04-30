@@ -30,35 +30,35 @@ export const navData = [
       title: "Eyeglasses",
       subTitle: "Stylish and functional frames crafted for modern men.",
       image_Url:
-        "https://cdn.shopify.com/s/files/1/2402/6753/files/PL475C2___45_large.jpg?v=1738753821",
+        "https://optica.africa/cdn/shop/files/OpticaOP_28100_C5_Front_768x.progressive.jpg?v=1744194306",
     },
     {
       id: 2,
       title: "Sunglasses",
       subTitle: "Elegant and chic eyewear to match every outfit.",
       image_Url:
-        "https://cdn.shopify.com/s/files/1/2402/6753/files/js1890c4__45_large.jpg?v=1738753797",
+        "https://optica.africa/cdn/shop/files/RossiB566016___FRONT_768x.progressive.jpg?v=1705480957",
     },
     {
       id: 3,
       title: "Contact Lenses",
       subTitle: "Durable and colorful frames designed for young wearers.",
       image_Url:
-        "https://optica.africa/cdn/shop/files/TR-ZC810_C281-P81___FRONT_22b0f6e3-6a7a-42d0-b737-bea4166fdd76_768x.progressive.jpg?v=1714052554",
+        "https://cdn.shopify.com/s/files/1/2402/6753/files/contactsContactlenses202309141440020111_large.jpg?v=1744890324",
     },
     {
       id: 4,
       title: "Blue Light",
       subTitle: "Accurate vision with stylish prescription eyewear.",
       image_Url:
-        "https://optica.africa/cdn/shop/files/CACTUSOLS1010C3_Front_768x.progressive.jpg?v=1742366142",
+        "hhttps://optica.africa/cdn/shop/files/c6074c2___FRONT_768x.progressive.jpg?v=1742369321",
     },
     {
       id: 5,
       title: "Kid's Glasses",
       subTitle: "Protect your eyes with our trendy UV-blocking sunglasses.",
       image_Url:
-        "https://optica.africa/cdn/shop/files/OpticaOP_28025_C2_Front_768x.progressive.jpg?v=1744194001",
+        "https://optica.africa/cdn/shop/products/M6209_C6___FRONT_768x.progressive.jpg?v=1709565035",
     },
     
     {
@@ -66,14 +66,14 @@ export const navData = [
       title: "Eyeglass Accessories",
       subTitle: "Cases, cleaners, and all the extras your glasses need.",
       image_Url:
-        "https://optica.africa/cdn/shop/files/c6074c2___FRONT.jpg?v=1742369321",
+        "https://optica.africa/cdn/shop/files/caseoptica12_768x.progressive.jpg?v=1709640372",
     },
     {
       id: 7,
       title: "Designer Frames",
       subTitle: "Luxury eyewear from top international brands.",
       image_Url:
-        "https://optica.africa/cdn/shop/files/c6074c2___FRONT.jpg?v=1742369321",
+        "https://optica.africa/cdn/shop/files/OpticaOP_28112_C5_Front_768x.progressive.jpg?v=1744194381",
     },
     
     {
@@ -81,7 +81,7 @@ export const navData = [
       title: "Women's Eyeglasses",
       subTitle: "Luxury eyewear from top international brands.",
       image_Url:
-        "https://optica.africa/cdn/shop/files/c6074c2___FRONT.jpg?v=1742369321",
+        "https://optica.africa/cdn/shop/files/CACTUSCT_TR8885_C11_Front_768x.progressive.jpg?v=1744193858",
     },
     
     {
@@ -89,7 +89,7 @@ export const navData = [
       title: "Men's Eyeglasses",
       subTitle: "Luxury eyewear from top international brands.",
       image_Url:
-        "https://optica.africa/cdn/shop/files/c6074c2___FRONT.jpg?v=1742369321",
+        "https://optica.africa/cdn/shop/files/BOSS1509-G10A___front_768x.progressive.jpg?v=1736766507",
     },
     
   ];
