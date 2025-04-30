@@ -91,7 +91,7 @@ const UserOrderDetails = () => {
   }
 
   return (
-    <div className="py-12 px-4 min-h-screen">
+    <div className="py-14 px-4 min-h-screen pb-52">
       <div className="w-full flex items-center justify-between mb-6">
         <div className="flex items-center">
           <BsFillBagFill size={30} color="crimson" />
