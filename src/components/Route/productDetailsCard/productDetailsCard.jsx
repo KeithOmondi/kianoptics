@@ -70,7 +70,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-black/40 z-40 flex items-center justify-center">
+    <div className="fixed inset-0 bg-black/40 z-50 flex items-center md:items-start justify-center px-4 pt-12 md:pt-24">
       {data ? (
         <div className="bg-white rounded-xl shadow-2xl relative w-[90%] max-w-2xl h-[90vh] overflow-y-auto p-6 md:p-8 transition-all duration-300 ease-in-out transform hover:scale-105">
           {/* Close Button */}

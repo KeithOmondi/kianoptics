@@ -84,7 +84,7 @@ const ProductDetails = ({ data }) => {
   const averageRating = (totalRatings / totalReviewsLength || 0).toFixed(2);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white pt-20">
       {data && (
         <div className="max-w-[1200px] w-[90%] md:w-[80%] mx-auto">
           <div className="py-5">
