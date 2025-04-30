@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
 
-// Import all pages
 import {
   HomePage,
   ActivationPage,
@@ -21,7 +20,7 @@ import {
   OrderSuccessPage,
   TrackOrderPage,
   OrderDetailsPage,
-  EventsPage
+  EventsPage,
 } from "./routes/Routes";
 
 import {
@@ -40,16 +39,16 @@ import {
   ShopWithDrawMoneyPage,
 } from "./routes/ShopRoutes";
 
-import SellerProtectedRoute from "./routes/SellerProtectedRoute";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import SellerProtectedRoute from "./routes/SellerProtectedRoute";
 
 import ShopCreatePage from "./pages/ShopCreatePage";
 import ShopLoginPage from "./pages/ShopLoginPage";
 import ContactPage from "./pages/ContactPage";
 
+import Loader from "./components/Loader/Loader";
 import { loadUser } from "./redux/actions/user";
 import { loadSeller } from "./redux/actions/seller";
-import Loader from "./components/Loader/Loader";
 
 const AppContent = () => {
   const location = useLocation();
@@ -57,10 +56,7 @@ const AppContent = () => {
 
   useEffect(() => {
     setLoading(true);
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 700);
-
+    const timer = setTimeout(() => setLoading(false), 700);
     return () => clearTimeout(timer);
   }, [location]);
 
@@ -68,22 +64,11 @@ const AppContent = () => {
     <>
       {loading && <Loader />}
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/events" element={<EventsPage />} />
-        <Route
-          path="/activation/:activation_token"
-          element={<ActivationPage />}
-        />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <ProfilePage />
-            </ProtectedRoute>
-          }
-        />
         <Route path="/product/:id" element={<ProductDetailsPage />} />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/eyeglasses" element={<Eyeglasses />} />
@@ -92,6 +77,26 @@ const AppContent = () => {
         <Route path="/blue-light-glasses" element={<BlueLight />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/order/success" element={<OrderSuccessPage />} />
+        <Route
+          path="/activation/:activation_token"
+          element={<ActivationPage />}
+        />
+        <Route path="/shop-create" element={<ShopCreatePage />} />
+        <Route path="/shop-login" element={<ShopLoginPage />} />
+        <Route
+          path="/seller/activation/:activation_token"
+          element={<SellerActivationPage />}
+        />
+
+        {/* Protected User Routes */}
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/checkout"
           element={
@@ -125,13 +130,7 @@ const AppContent = () => {
           }
         />
 
-        {/* Shop Routes */}
-        <Route path="/shop-create" element={<ShopCreatePage />} />
-        <Route path="/shop-login" element={<ShopLoginPage />} />
-        <Route
-          path="/seller/activation/:activation_token"
-          element={<SellerActivationPage />}
-        />
+        {/* Protected Seller Routes */}
         <Route
           path="/shop/:id"
           element={
@@ -148,16 +147,6 @@ const AppContent = () => {
             </SellerProtectedRoute>
           }
         />
-        <Route
-          path="/dashboard-refunds"
-          element={
-            <SellerProtectedRoute>
-              <ShopAllRefunds />
-            </SellerProtectedRoute>
-          }
-        />
-
-        {/* Protected Seller Routes */}
         <Route
           path="/dashboard"
           element={
@@ -207,10 +196,10 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/dashboard-withdraw-money"
+          path="/dashboard-refunds"
           element={
             <SellerProtectedRoute>
-              <ShopWithDrawMoneyPage />
+              <ShopAllRefunds />
             </SellerProtectedRoute>
           }
         />
@@ -223,6 +212,14 @@ const AppContent = () => {
           }
         />
         <Route
+          path="/dashboard-withdraw-money"
+          element={
+            <SellerProtectedRoute>
+              <ShopWithDrawMoneyPage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
           path="/settings"
           element={
             <SellerProtectedRoute>
@@ -230,7 +227,6 @@ const AppContent = () => {
             </SellerProtectedRoute>
           }
         />
-        
       </Routes>
     </>
   );
@@ -245,10 +241,10 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <BrowserRouter>
+    <>
       <AppContent />
       <ToastContainer
-        position="bottom-center"
+        position="top-left"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -259,7 +255,7 @@ const App = () => {
         pauseOnHover
         theme="dark"
       />
-    </BrowserRouter>
+    </>
   );
 };
 
