@@ -95,7 +95,7 @@ const Header = ({ activeHeading, allProducts }) => {
         <div className="flex justify-between items-center flex-wrap gap-4">
           <Link to="/">
             <img
-              src="https://optica.africa/cdn/shop/t/121/assets/Optica_Logo_Primary.svg?v=69688584039873325631697273391"
+              src="https://res.cloudinary.com/drls2cpnu/image/upload/v1741849005/avatars/hv7tgjy6ghyimyrifbyd.jpg"
               alt="Logo"
               className="h-16 w-full rounded-md object-contain"
             />
@@ -254,7 +254,7 @@ const Header = ({ activeHeading, allProducts }) => {
           {/* Logo */}
           <Link to="/">
             <img
-              src="https://optica.africa/cdn/shop/t/121/assets/Optica_Logo_Primary.svg?v=69688584039873325631697273391"
+              src="https://res.cloudinary.com/drls2cpnu/image/upload/v1741849005/avatars/hv7tgjy6ghyimyrifbyd.jpg"
               alt="Logo"
               className="h-16 w-full rounded-md object-contain "
             />
